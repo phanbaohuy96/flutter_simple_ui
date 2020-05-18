@@ -117,17 +117,16 @@ class _SimpleTextFieldState extends State<SimpleTextField> {
                     ),
                   ),
                 ),
-                widget.iconShowPass != null
-                    ? IconButton(
-                        icon: widget.iconShowPass,
-                        iconSize: widget.height,
-                        onPressed: () {
-                          setState(() {
-                            isPasswordField = !isPasswordField;
-                          });
-                        },
-                      )
-                    : const SizedBox()
+                if (widget.iconShowPass != null)
+                  IconButton(
+                    icon: widget.iconShowPass,
+                    iconSize: widget.height,
+                    onPressed: () {
+                      setState(() {
+                        isPasswordField = !isPasswordField;
+                      });
+                    },
+                  )
               ],
             ),
           ),

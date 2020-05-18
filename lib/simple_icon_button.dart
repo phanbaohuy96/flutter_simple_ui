@@ -8,7 +8,8 @@ enum IconSide { Left, Right, Top, Bottom }
 class SimpleIconButton extends StatefulWidget {
   final double height;
   final double width;
-  final List<Color> bgColors;
+  final Color color;
+  final List<Color> gradientColors;
   final String text;
   final TextStyle textStyle;
   final Function onPressed;
@@ -26,7 +27,8 @@ class SimpleIconButton extends StatefulWidget {
     Key key,
     this.height,
     this.width,
-    this.bgColors = const [Colors.transparent, Colors.transparent],
+    this.color = Colors.black12,
+    this.gradientColors,
     this.text,
     this.onPressed,
     this.textStyle = const TextStyle(
@@ -39,9 +41,9 @@ class SimpleIconButton extends StatefulWidget {
     this.iconDisable = const SizedBox(),
     this.iconAxis = Axis.vertical,
     this.borderColor = Colors.grey,
-    this.borderWidth = 2,
+    this.borderWidth = 0,
     this.iconSide = IconSide.Top,
-    this.padding = const EdgeInsets.all(0),
+    this.padding = const EdgeInsets.all(3),
     this.controller,
   }) : super(key: key);
 
@@ -77,34 +79,55 @@ class _SimpleIconButtonState extends State<SimpleIconButton> {
           width: widget.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
-              widget.borderRadius ?? widget.height,
+              widget.borderRadius ?? widget.height ?? 16 / 2,
             ),
             border: Border.all(
               width: widget.borderWidth,
               color: isEnable ? widget.borderColor : Colors.transparent,
             ),
-            gradient: LinearGradient(
-              colors: isEnable
-                  ? widget.bgColors
-                  : const [Colors.black12, Colors.black12],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+            gradient: _gradient(isEnable),
           ),
           child: RawMaterialButton(
-            padding: widget.padding,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                widget.borderRadius ?? widget.height,
+                widget.borderRadius ?? widget.height ?? 16 / 2,
               ),
             ),
+            fillColor: _bgColor(isEnable),
             elevation: 0.0,
             onPressed: isEnable ? widget.onPressed : null,
+            padding: widget.padding,
             child: Align(child: getContent(isEnable)),
           ),
         );
       },
     );
+  }
+
+  bool get isActiveGradient =>
+      widget.gradientColors != null && widget.gradientColors.length >= 2;
+
+  Color _bgColor(bool isEnable) {
+    if (isActiveGradient) {
+      return null;
+    }
+    if (widget.color == null || !isEnable) {
+      return Colors.black12;
+    }
+    return widget.color;
+  }
+
+  Gradient _gradient(bool isEnable) {
+    if (isActiveGradient) {
+      return LinearGradient(
+        colors: isEnable
+            ? widget.gradientColors
+            : const [Colors.black12, Colors.black12],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      );
+    }
+    return null;
   }
 
   Widget getContent(bool isEnable) {

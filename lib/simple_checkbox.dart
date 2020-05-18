@@ -61,17 +61,15 @@ class _SimpleCheckBoxState extends State<SimpleCheckBox> {
             child: const SizedBox(),
           ),
         ),
-        widget.text != null
-            ? const SizedBox(
-                width: 10,
-              )
-            : const SizedBox(),
-        widget.text != null
-            ? InkWell(
-                onTap: onTap,
-                child: widget.text,
-              )
-            : const SizedBox()
+        if (widget.text != null)
+          const SizedBox(
+            width: 10,
+          ),
+        if (widget.text != null)
+          InkWell(
+            onTap: onTap,
+            child: widget.text,
+          )
       ],
     );
   }
