@@ -51,13 +51,15 @@ class NotifyDialog extends StatelessWidget {
                 height: 10,
               ),
               if (titlePopup != null) titlePopup,
-              const SizedBox(
-                height: 10,
-              ),
+              if (titlePopup != null)
+                const SizedBox(
+                  height: 10,
+                ),
               if (content != null) content,
-              const SizedBox(
-                height: 10,
-              ),
+              if (content != null)
+                const SizedBox(
+                  height: 20,
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
