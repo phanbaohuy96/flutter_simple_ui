@@ -28,7 +28,7 @@ class NotifyDialog extends StatelessWidget {
         child: Container(
           height: height,
           width: width,
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(20),
           margin: const EdgeInsets.symmetric(
             horizontal: 10,
           ),
